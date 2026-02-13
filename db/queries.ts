@@ -37,25 +37,26 @@ export async function updateNote(id: number, dto: UpdateNoteDTO): Promise<Note |
     return getNoteById(id);
   }
 
-  const setParts: string[] = [];
-  const params: (string | number | Date | null)[] = [];
+  const params: (string | number | null)[] = [];
+  let setClause = "";
 
   if (dto.title !== undefined) {
-    setParts.push(`title = $${params.length + 1}`);
+    setClause = `title = $${params.length + 1}`;
     params.push(dto.title);
   }
   if (dto.content !== undefined) {
-    setParts.push(`content = $${params.length + 1}`);
+    if (setClause) setClause += ", ";
+    setClause += `content = $${params.length + 1}`;
     params.push(dto.content);
   }
 
-  setParts.push(`updated_at = NOW()`);
+  if (setClause) setClause += ", ";
+  setClause += `updated_at = NOW()`;
   params.push(id);
 
-  const result = await client.unsafe<Note[]>(
-    `UPDATE notes SET ${setParts.join(", ")} WHERE id = $${params.length} RETURNING id, title, content, created_at, updated_at`,
-    params
-  );
+  const sql = `UPDATE notes SET ${setClause} WHERE id = $${params.length} RETURNING id, title, content, created_at, updated_at`;
+
+  const result = await client.unsafe<Note[]>(sql, params);
 
   return result[0] || null;
 }
