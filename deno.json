@@ -2,7 +2,7 @@
   "tasks": {
     "dev": "deno run --watch --allow-net --allow-env main.ts",
     "start": "deno run --allow-net --allow-env main.ts",
-    "init-db": "deno run --allow-net --allow-env init_db.ts"
+    "init-db": "deno run --allow-net --allow-env scripts/init_db.ts"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^16.0.0",

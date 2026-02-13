@@ -142,6 +142,10 @@ notes/
 │   └── notes.ts         # Notes route handlers
 ├── types/
 │   └── notes.ts         # TypeScript interfaces
+├── scripts/
+│   └── init_db.ts       # Database initialization script
+├── tests/
+│   └── main_test.ts     # Test files
 ├── .env.example         # Environment template
 └── README.md            # This file
 ```

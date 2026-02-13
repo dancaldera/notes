@@ -1,6 +1,6 @@
 import "@std/dotenv/load";
-import { getClient } from "./db/client.ts";
-import { schemaSql } from "./db/schema.ts";
+import { getClient } from "../db/client.ts";
+import { schemaSql } from "../db/schema.ts";
 
 async function initDatabase() {
   try {
