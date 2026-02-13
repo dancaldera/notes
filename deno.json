@@ -8,5 +8,9 @@
     "@oak/oak": "jsr:@oak/oak@^16.0.0",
     "postgres": "npm:postgres@3.4.5",
     "@std/dotenv/load": "jsr:@std/dotenv@^0.225.0/load"
+  },
+  "deploy": {
+    "org": "dancr",
+    "app": "notes"
   }
 }
