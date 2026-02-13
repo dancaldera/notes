@@ -33,29 +33,29 @@ export async function createNote(dto: CreateNoteDTO): Promise<Note> {
 export async function updateNote(id: number, dto: UpdateNoteDTO): Promise<Note | null> {
   const client = getClient();
 
-  // Build dynamic update query based on provided fields
-  const updates: string[] = [];
-  const values: Record<string, unknown> = { id };
-
-  if (dto.title !== undefined) {
-    updates.push(`title = ${dto.title}`);
-  }
-  if (dto.content !== undefined) {
-    updates.push(`content = ${dto.content}`);
-  }
-
-  if (updates.length === 0) {
+  if (dto.title === undefined && dto.content === undefined) {
     return getNoteById(id);
   }
 
-  updates.push("updated_at = NOW()");
+  const setParts: string[] = [];
+  const params: (string | number | Date | null)[] = [];
 
-  const result = await client<Note[]>`
-    UPDATE notes
-    SET ${client(updates.join(", "))}
-    WHERE id = ${id}
-    RETURNING id, title, content, created_at, updated_at
-  `;
+  if (dto.title !== undefined) {
+    setParts.push(`title = $${params.length + 1}`);
+    params.push(dto.title);
+  }
+  if (dto.content !== undefined) {
+    setParts.push(`content = $${params.length + 1}`);
+    params.push(dto.content);
+  }
+
+  setParts.push(`updated_at = NOW()`);
+  params.push(id);
+
+  const result = await client.unsafe<Note[]>(
+    `UPDATE notes SET ${setParts.join(", ")} WHERE id = $${params.length} RETURNING id, title, content, created_at, updated_at`,
+    params
+  );
 
   return result[0] || null;
 }
