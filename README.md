@@ -1,4 +1,4 @@
-# Deno Notes API
+# Deno Notes API, V2
 
 A minimal RESTful API for managing notes, built with Deno, Oak, and PostgreSQL.
 
