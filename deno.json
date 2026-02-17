@@ -1,13 +1,14 @@
 {
   "tasks": {
-    "dev": "deno run --watch --allow-net --allow-env main.ts",
-    "start": "deno run --allow-net --allow-env main.ts",
+    "dev": "deno run --watch --allow-net --allow-env --allow-read main.ts",
+    "start": "deno run --allow-net --allow-env --allow-read main.ts",
     "init-db": "deno run --allow-net --allow-env scripts/init_db.ts"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^16.0.0",
     "postgres": "npm:postgres@3.4.5",
-    "@std/dotenv/load": "jsr:@std/dotenv@^0.225.0/load"
+    "@std/dotenv/load": "jsr:@std/dotenv@^0.225.0/load",
+    "@std/assert": "jsr:@std/assert@^1.0.0"
   },
   "deploy": {
     "org": "dancr",

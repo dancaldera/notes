@@ -4,7 +4,8 @@ Guidelines for AI coding agents working in this Deno Notes API codebase.
 
 ## Project Overview
 
-A minimal RESTful API for managing notes, built with Deno 2.x, Oak framework, and PostgreSQL.
+A minimal RESTful API for managing notes, built with Deno 2.x, Oak framework,
+and PostgreSQL.
 
 ## Build/Run Commands
 
@@ -58,7 +59,8 @@ import type { CreateNoteDTO, UpdateNoteDTO } from "../types/notes.ts";
 import * as noteQueries from "../db/queries.ts";
 ```
 
-**Always add dependencies to `deps.ts`** and re-export from there, rather than importing directly from external packages in source files.
+**Always add dependencies to `deps.ts`** and re-export from there, rather than
+importing directly from external packages in source files.
 
 ### TypeScript
 
@@ -72,7 +74,7 @@ import * as noteQueries from "../db/queries.ts";
 export interface Note {
   id: number;
   title: string;
-  content: string | null;  // nullable database field
+  content: string | null; // nullable database field
   created_at: string;
   updated_at: string;
 }
@@ -114,6 +116,7 @@ ctx.response.body = { error: "Invalid request" };
 ### API Response Format
 
 Success response:
+
 ```json
 {
   "id": 1,
@@ -125,6 +128,7 @@ Success response:
 ```
 
 Error response:
+
 ```json
 {
   "error": "Error message",
@@ -134,7 +138,8 @@ Error response:
 
 ### Middleware Pattern
 
-All route handlers should use try/catch. The application has global error middleware, but handlers should catch and set appropriate status codes.
+All route handlers should use try/catch. The application has global error
+middleware, but handlers should catch and set appropriate status codes.
 
 ```typescript
 router.get("/api/resource/:id", async (ctx) => {

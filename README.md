@@ -39,11 +39,13 @@ SQL
 ## Configuration
 
 1. Copy the example environment file:
+
 ```bash
 cp .env.example .env
 ```
 
 2. Edit `.env` with your database credentials:
+
 ```bash
 DATABASE_URL=postgresql://user:password@localhost:5432/notesdb
 PORT=8000
@@ -52,33 +54,37 @@ PORT=8000
 ## Running the Server
 
 ### Development (with hot reload)
+
 ```bash
 deno run --watch --allow-net --allow-env --allow-read main.ts
 ```
 
 ### Production
+
 ```bash
 deno run --allow-net --allow-env --allow-read main.ts
 ```
 
 **Permission flags:**
+
 - `--allow-net`: HTTP server + database connectivity
 - `--allow-env`: Read DATABASE_URL environment variable
 - `--allow-read`: Load .env file
 
 ## API Endpoints
 
-| Method | Endpoint | Description | Request Body |
-|--------|----------|-------------|--------------|
-| GET | `/api/notes` | List all notes | - |
-| GET | `/api/notes/:id` | Get single note | - |
-| POST | `/api/notes` | Create note | `{title, content?}` |
-| PATCH | `/api/notes/:id` | Update note | `{title?, content?}` |
-| DELETE | `/api/notes/:id` | Delete note | - |
+| Method | Endpoint         | Description     | Request Body         |
+| ------ | ---------------- | --------------- | -------------------- |
+| GET    | `/api/notes`     | List all notes  | -                    |
+| GET    | `/api/notes/:id` | Get single note | -                    |
+| POST   | `/api/notes`     | Create note     | `{title, content?}`  |
+| PATCH  | `/api/notes/:id` | Update note     | `{title?, content?}` |
+| DELETE | `/api/notes/:id` | Delete note     | -                    |
 
 ## Usage Examples
 
 ### Create a note
+
 ```bash
 curl -X POST http://localhost:8000/api/notes \
   -H "Content-Type: application/json" \
@@ -86,16 +92,19 @@ curl -X POST http://localhost:8000/api/notes \
 ```
 
 ### List all notes
+
 ```bash
 curl http://localhost:8000/api/notes
 ```
 
 ### Get a single note
+
 ```bash
 curl http://localhost:8000/api/notes/1
 ```
 
 ### Update a note
+
 ```bash
 curl -X PATCH http://localhost:8000/api/notes/1 \
   -H "Content-Type: application/json" \
@@ -103,6 +112,7 @@ curl -X PATCH http://localhost:8000/api/notes/1 \
 ```
 
 ### Delete a note
+
 ```bash
 curl -X DELETE http://localhost:8000/api/notes/1
 ```
@@ -110,6 +120,7 @@ curl -X DELETE http://localhost:8000/api/notes/1
 ## Response Format
 
 ### Success
+
 ```json
 {
   "id": 1,
@@ -121,6 +132,7 @@ curl -X DELETE http://localhost:8000/api/notes/1
 ```
 
 ### Error
+
 ```json
 {
   "error": "Error message",
@@ -167,7 +179,8 @@ notes/
 5. Configure:
    - **Entrypoint**: `main.ts`
    - **Region**: Select nearest region
-6. Add environment variable: `DATABASE_URL` (your Neon or PostgreSQL connection string)
+6. Add environment variable: `DATABASE_URL` (your Neon or PostgreSQL connection
+   string)
 7. Click "Deploy"
 
 Or deploy via CLI:
@@ -176,7 +189,8 @@ Or deploy via CLI:
 deno deploy create --org "Daniel Caldera Rosas" --app "notes" --source=. --region=global
 ```
 
-**Important**: Deno Deploy uses environment variables directly. Add `DATABASE_URL` in the project settings dashboard after deployment.
+**Important**: Deno Deploy uses environment variables directly. Add
+`DATABASE_URL` in the project settings dashboard after deployment.
 
 ### Initialize Database on Production
 

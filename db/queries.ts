@@ -1,4 +1,4 @@
-import type { Note, CreateNoteDTO, UpdateNoteDTO } from "../types/notes.ts";
+import type { CreateNoteDTO, Note, UpdateNoteDTO } from "../types/notes.ts";
 import { getClient } from "./client.ts";
 
 export async function getAllNotes(): Promise<Note[]> {
@@ -30,7 +30,10 @@ export async function createNote(dto: CreateNoteDTO): Promise<Note> {
   return result[0];
 }
 
-export async function updateNote(id: number, dto: UpdateNoteDTO): Promise<Note | null> {
+export async function updateNote(
+  id: number,
+  dto: UpdateNoteDTO,
+): Promise<Note | null> {
   const client = getClient();
 
   if (dto.title === undefined && dto.content === undefined) {
@@ -54,7 +57,8 @@ export async function updateNote(id: number, dto: UpdateNoteDTO): Promise<Note |
   setClause += `updated_at = NOW()`;
   params.push(id);
 
-  const sql = `UPDATE notes SET ${setClause} WHERE id = $${params.length} RETURNING id, title, content, created_at, updated_at`;
+  const sql =
+    `UPDATE notes SET ${setClause} WHERE id = $${params.length} RETURNING id, title, content, created_at, updated_at`;
 
   const result = await client.unsafe<Note[]>(sql, params);
 
